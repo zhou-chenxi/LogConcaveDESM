@@ -4,7 +4,7 @@
 \alias{density_metrics}
 \alias{kl_div}
 \alias{hyvarinen_div}
-\alias{tv_dist}
+\alias{L1_dist}
 \alias{hellinger_dist}
 \title{Computation of Various Distances between Two Probability Distributions}
 \usage{
@@ -25,7 +25,7 @@ hyvarinen_div(
   print_error = FALSE
 )
 
-tv_dist(
+L1_dist(
   true_density,
   density_estimate,
   minus_const = 0,
