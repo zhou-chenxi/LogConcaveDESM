@@ -12,7 +12,13 @@ the quality of the density estimate.
 
 ## Installation
 
-To be updated.
+The development version of the `LogConcaveDESM` can be installed from
+the GitHub using `devtools`:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("zhoucx1119/LogConcaveDESM")
+```
 
 ## Load the Package
 
@@ -86,19 +92,19 @@ result <- lcd_scorematching(
 #>           warm start: on, polish: on, time_limit: off
 #> 
 #> iter   objective    pri res    dua res    rho        time
-#>    1  -4.3429e+00   1.35e+01   4.63e-03   1.00e-01   4.38e-03s
-#>  200  -6.7500e+01   2.79e+00   1.88e-03   1.98e-02   1.66e-02s
-#>  400  -7.1064e+01   4.32e+00   4.59e-04   3.81e-03   2.88e-02s
-#>  600  -6.5517e+01   1.60e+00   1.22e-04   3.81e-03   4.03e-02s
-#>  800  -6.7135e+01   4.42e-01   3.10e-05   3.81e-03   5.74e-02s
-#> 1000  -6.6824e+01   1.01e-01   6.51e-06   3.81e-03   6.97e-02s
-#> plsh  -6.6874e+01   4.27e-10   3.14e-09   --------   7.23e-02s
+#>    1  -4.3429e+00   1.35e+01   4.63e-03   1.00e-01   5.74e-03s
+#>  200  -6.7500e+01   2.79e+00   1.88e-03   1.98e-02   2.28e-02s
+#>  400  -7.1064e+01   4.32e+00   4.59e-04   3.81e-03   3.54e-02s
+#>  600  -6.5517e+01   1.60e+00   1.22e-04   3.81e-03   4.64e-02s
+#>  800  -6.7135e+01   4.42e-01   3.10e-05   3.81e-03   5.73e-02s
+#> 1000  -6.6824e+01   1.01e-01   6.51e-06   3.81e-03   6.86e-02s
+#> plsh  -6.6874e+01   4.27e-10   3.14e-09   --------   7.21e-02s
 #> 
 #> status:               solved
 #> solution polish:      successful
 #> number of iterations: 1000
 #> optimal objective:    -66.8737
-#> run time:             7.23e-02s
+#> run time:             7.21e-02s
 #> optimal rho estimate: 1.93e-03
 #> The status of solving the constrained quadratic optimization problem is: optimal.
 ```
