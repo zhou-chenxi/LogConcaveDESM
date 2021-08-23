@@ -39,9 +39,9 @@ score matching density estimate, respectively.
 \code{\link{plot_mle_scorematching}} plots the log-concave maximum likelihood and score matching
 density estimates together.
 
-\code{\link{kl_div}}, \code{\link{hyvarinen_div}}, \code{\link{tv_dist}} and
+\code{\link{kl_div}}, \code{\link{hyvarinen_div}}, \code{\link{L1_dist}} and
  \code{\link{hellinger_dist}} compute the Kullback-Leibler divergence, Hyvarinen divergence,
- total variation distance, and Hellinger distance between the true density function and
+ L1 distance, and Hellinger distance between the true density function and
  the density estimate, respectively.
 }
 \seealso{
