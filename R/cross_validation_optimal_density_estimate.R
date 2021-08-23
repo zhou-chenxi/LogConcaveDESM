@@ -31,7 +31,7 @@
 cv_optimal_density_estimate <- function(data, domain, penalty_param_candidates, fold_number = 5) {
 
     data <- as.numeric(data)
-    if (any(penalty_param_candidates) < 0) {
+    if (any(penalty_param_candidates < 0)) {
         stop("penalty_param_candidates should all be positive but contains negative elements.")
     }
 
@@ -54,13 +54,14 @@ cv_optimal_density_estimate <- function(data, domain, penalty_param_candidates, 
     for (i in 1:length(penalty_param_candidates)) {
 
         lambda_val <- penalty_param_candidates[i]
+        message(paste0("Penalty parameter value: ", lambda_val))
 
         loss_value <- 0
 
         for (j in 1:fold_number) {
 
-            train_data <- data[split_id != i]
-            test_data <- data[split_id == i]
+            train_data <- data[split_id != j]
+            test_data <- data[split_id == j]
 
             estimator <- lcd_scorematching(
                 data = train_data,
@@ -71,14 +72,21 @@ cv_optimal_density_estimate <- function(data, domain, penalty_param_candidates, 
                                evaluate_scorematching_loss(
                                    scorematching_logconcave = estimator,
                                    new_data = test_data)
-                           )
+            )
         }
 
         loss_record[i] <- loss_value
 
     }
 
+    ddff <- data.frame(
+        penalty_param = penalty_param_candidates,
+        loss_vals = loss_record)
+
+    print(ddff)
+
     opt_penalty_param <- penalty_param_candidates[which.min(loss_record)]
+    print(paste0("Optimal penality parameter is ", opt_penalty_param, "."))
 
     opt_estimator <- lcd_scorematching(
         data = data,
