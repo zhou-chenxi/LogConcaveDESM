@@ -1,0 +1,208 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# Log-Concave Density Estimation Using the Score Matching Loss Function
+
+`LogConcaveDESM` is an \code{R} package to compute and
+visualize the log-concave score matching derocnsity estimate over a bounded domain.
+It also contains functions to plot the first and second derivatives of the log-density estimate.
+Furthermore, functions to compute various distances between two probability distributions
+are provided to assess the quality of the density estimate.
+
+## Installation
+
+To be updated. 
+
+## Load the Package 
+
+```{r warning=FALSE}
+library(LogConcaveDESM, warn.conflicts = FALSE)
+library(patchwork)
+library(ggplot2)
+```
+
+## Computing and Visualizing Unpenalized Log-concave Score Matching Density Estimate
+
+We show how to use functions in `LogConcaveDESM` to compute and visualize the log-concave 
+score matching density estimate over a bounded domain. 
+
+We first simulate data from a truncated normal distribution over the interval $[-5, 5]$. 
+
+```{r load_data}
+set.seed(2021)
+N <- 200
+parent_mean <- 0
+parent_sd <- 1
+domain <- c(-5, 5)
+t_normal <- truncated_normal(parent_mean, parent_sd, domain)
+data <- t_normal$sampling(N)
+```
+
+We plot the histogram of the data below. 
+
+```{r hist_data}
+binwidth <- 2 * stats::IQR(data) / N ** (1/3)
+ggplot() + geom_histogram(
+  data = data.frame(x = data), 
+  aes(x = x, y = ..density..), 
+  binwidth = binwidth,
+            color = "darkblue",
+            fill = "lightblue") + 
+  coord_cartesian(xlim = domain, ylim = c(-0.01, 0.5)) + 
+  theme_bw()
+```
+
+We assume that the second derivative of the logarithm of the log-concave score matching 
+density estimate is a piecewise linear function with knots at the data points. 
+With no penalty, the resulting optimal second derivative values at data points can be computed as below: 
+
+```{r opt}
+result <- lcd_scorematching(
+  data = data, 
+  domain = domain, 
+  penalty_param = 0, 
+  verbose = TRUE
+)
+```
+
+Then, the second derivative of the logarithm of the log-concave score matching density estimate 
+at arbitrary points can be computed using the `evaluate_logden_deriv2` function, and 
+can be visualized using the `plot_logden_deriv2` function. 
+
+```{r deriv2}
+logden_deriv2_vals <- evaluate_logden_deriv2(
+  scorematching_logconcave = result, 
+  newx = seq(domain[1], domain[2], length.out = 11)
+)
+logden_deriv2_vals
+
+plot_deriv2 <- plot_logden_deriv2(
+  scorematching_logconcave = result, 
+  plot_domain = domain, 
+  plot_points_cnt = 500)
+plot_deriv2
+```
+
+Subsequently, the first derivative of the logarithm of the log-concave score matching density estimate 
+at arbitrary points can be computed using the `evaluate_logden_deriv1` function, and 
+can be visualized using the `plot_logden_deriv1` function. 
+
+```{r deriv1}
+logden_deriv1_vals <- evaluate_logden_deriv1(
+  scorematching_logconcave = result, 
+  newx = seq(domain[1], domain[2], length.out = 11)
+)
+logden_deriv1_vals
+
+plot_deriv1 <- plot_logden_deriv1(
+  scorematching_logconcave = result, 
+  plot_domain = domain, 
+  plot_points_cnt = 500)
+plot_deriv1
+```
+
+Then, the (un-normalized) log-density estimate at arbitrary point can be computed 
+using the `evaluate_logdensity` function, and can be visualized using the `plot_logdensity` function. 
+
+```{r logden}
+logden_vals <- evaluate_logdensity(
+  scorematching_logconcave = result, 
+  newx = seq(domain[1], domain[2], length.out = 11)
+)
+logden_vals
+
+plot_logden <- plot_logdensity(
+  scorematching_logconcave = result, 
+  plot_domain = domain, 
+  plot_points_cnt = 500)
+plot_logden
+```
+
+Finally, to evaluate and visualize the density estimate itself, we use `evaluate_density` 
+and `plot_density` functions, respectively. 
+
+```{r den}
+den_vals <- evaluate_density(
+  scorematching_logconcave = result, 
+  newx = seq(domain[1], domain[2], length.out = 11)
+)
+den_vals
+
+plot_den <- plot_density(
+  scorematching_logconcave = result,
+  plot_domain = domain,
+  plot_points_cnt = 500, 
+  plot_hist = TRUE
+  )
+plot_den
+```
+
+## Computing and Visualizing Penalized Log-concave Score Matching Density Estimate
+
+As we can see above, the un-penalized log-concave score matching density estimate is 
+too concentrated at the place where data are abundant. To remedy this, we consider 
+penalized log-concave score matching density estimate, where the optimal penalty parameter 
+is chosen using the `cv_optimal_density_estimate` function. 
+
+```{r cv}
+lambda_cand <- exp(seq(-5, 1, by = 0.5))
+opt_den <- cv_optimal_density_estimate(
+  data = data, 
+  domain = domain, 
+  penalty_param_candidates = lambda_cand, 
+  fold_number = 5
+)
+```
+
+The resulting density estimate is the following. 
+
+```{r plot-opt}
+plot_opt_den <- plot_density(
+  scorematching_logconcave = opt_den,
+  plot_domain = domain,
+  plot_points_cnt = 500, 
+  plot_hist = TRUE
+  )
+plot_opt_den
+```
+
+We could assess the quality of this density estimate using various metrics 
+between two probability distributions, for example, the Kullback-Leibler divergence, 
+the Hyvarinen divergence, the $L1$ distance, and the Hellinger distance. 
+
+```{r metrics}
+kl <- kl_div(
+  true_density = t_normal, 
+  density_estimate = opt_den) 
+
+hyva <- hyvarinen_div(
+  true_density = t_normal, 
+  density_estimate = opt_den) 
+
+l1 <- L1_dist(
+  true_density = t_normal, 
+  density_estimate = opt_den) 
+
+he <- hellinger_dist(
+  true_density = t_normal, 
+  density_estimate = opt_den) 
+
+metric_table <- cbind(
+  Metrics = c("Kullback-Leibler Divergence", "Hyvarinen divergence", 
+              "L1 Distance", "Hellinger Distance"), 
+  Values = round(c(kl, hyva, l1, he), 5)
+)
+
+knitr::kable(metric_table)
+```
