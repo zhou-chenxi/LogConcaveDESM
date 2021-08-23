@@ -83,10 +83,10 @@ hyvarinen_div <- function(true_density, density_estimate,
 
     # ----------------------------------------------------------------------------------------------
     batch <- true_density$sampling(mc_batch_size)
-    true_vals <- log(true_density$evaluate_logderiv1(batch)$logdervals)
-    esti_vals <- log(evaluate_logden_deriv1(density_estimate, batch)$logderiv1_vals)
+    true_vals <- true_density$evaluate_logderiv1(batch)$logdervals
+    esti_vals <- evaluate_logden_deriv1(density_estimate, batch)$logderiv1_vals
 
-    result1 <- mean((true_vals - esti_vals) ** 2)
+    result1 <- mean((true_vals - esti_vals) ** 2) / 2
     rel_error <- .Machine$double.xmax
     batch_cnt <- 1
     while (rel_error > mc_rel_tol_param) {
@@ -94,10 +94,10 @@ hyvarinen_div <- function(true_density, density_estimate,
         result2 <- result1
 
         new_batch <- true_density$sampling(mc_batch_size)
-        true_vals <- log(true_density$evaluate_logderiv1(new_batch)$logdervals)
-        esti_vals <- log(evaluate_logden_deriv1(density_estimate, new_batch)$logderiv1_vals)
+        true_vals <- true_density$evaluate_logderiv1(new_batch)$logdervals
+        esti_vals <- evaluate_logden_deriv1(density_estimate, new_batch)$logderiv1_vals
 
-        result1 <- mean((true_vals - esti_vals) ** 2)
+        result1 <- mean((true_vals - esti_vals) ** 2) / 2
         result1 <- (result1 + result2) / 2
         rel_error <- abs((result1 - result2) / result2)
 
@@ -116,7 +116,7 @@ hyvarinen_div <- function(true_density, density_estimate,
 #' @rdname density_metrics
 #' @export
 #'
-tv_dist <- function(true_density, density_estimate, minus_const = 0,
+L1_dist <- function(true_density, density_estimate, minus_const = 0,
                     mc_batch_size = 100, mc_rel_tol_param = 1e-2, print_error = FALSE) {
 
     # check the domain
@@ -201,6 +201,6 @@ hellinger_dist <- function(true_density, density_estimate, minus_const = 0,
 
     }
 
-    return(result1)
+    return(sqrt(result1))
 
 }
