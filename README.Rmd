@@ -22,7 +22,12 @@ are provided to assess the quality of the density estimate.
 
 ## Installation
 
-To be updated. 
+The development version of the `LogConcaveDESM` can be installed from the GitHub using `devtools`: 
+
+```{r installation}
+# install.packages("devtools")
+devtools::install_github("zhoucx1119/LogConcaveDESM")
+```
 
 ## Load the Package 
 
