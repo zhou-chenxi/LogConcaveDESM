@@ -11,7 +11,10 @@ Imports:
     logcondens, 
     CVXR, 
     plyr, 
-    dplyr
+    dplyr, 
+    gganimate, 
+    forcats, 
+    transformr
 Maintainer: Chenxi Zhou <zhou.779@osu.edu>
 Description: LogConcaveDESM is an \code{R} package to compute and
                 visualize the log-concave score matching density estimate over a bounded domain.
