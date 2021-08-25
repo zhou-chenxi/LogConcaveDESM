@@ -92,19 +92,19 @@ result <- lcd_scorematching(
 #>           warm start: on, polish: on, time_limit: off
 #> 
 #> iter   objective    pri res    dua res    rho        time
-#>    1  -4.3429e+00   1.35e+01   4.63e-03   1.00e-01   5.74e-03s
-#>  200  -6.7500e+01   2.79e+00   1.88e-03   1.98e-02   2.28e-02s
-#>  400  -7.1064e+01   4.32e+00   4.59e-04   3.81e-03   3.54e-02s
-#>  600  -6.5517e+01   1.60e+00   1.22e-04   3.81e-03   4.64e-02s
-#>  800  -6.7135e+01   4.42e-01   3.10e-05   3.81e-03   5.73e-02s
-#> 1000  -6.6824e+01   1.01e-01   6.51e-06   3.81e-03   6.86e-02s
-#> plsh  -6.6874e+01   4.27e-10   3.14e-09   --------   7.21e-02s
+#>    1  -4.3429e+00   1.35e+01   4.63e-03   1.00e-01   4.54e-03s
+#>  200  -6.7500e+01   2.79e+00   1.88e-03   1.98e-02   1.77e-02s
+#>  400  -7.1064e+01   4.32e+00   4.59e-04   3.81e-03   3.73e-02s
+#>  600  -6.5517e+01   1.60e+00   1.22e-04   3.81e-03   4.90e-02s
+#>  800  -6.7135e+01   4.42e-01   3.10e-05   3.81e-03   6.01e-02s
+#> 1000  -6.6824e+01   1.01e-01   6.51e-06   3.81e-03   7.07e-02s
+#> plsh  -6.6874e+01   4.27e-10   3.14e-09   --------   7.33e-02s
 #> 
 #> status:               solved
 #> solution polish:      successful
 #> number of iterations: 1000
 #> optimal objective:    -66.8737
-#> run time:             7.21e-02s
+#> run time:             7.33e-02s
 #> optimal rho estimate: 1.93e-03
 #> The status of solving the constrained quadratic optimization problem is: optimal.
 ```
@@ -352,19 +352,51 @@ opt_den <- cv_optimal_density_estimate(
 #> The status of solving the constrained quadratic optimization problem is: optimal.
 ```
 
-The resulting density estimate is the following.
+The second and first derivatives of the logarithm of the optimal density
+estimate, the logarithm of the un-normalized optimal density estimate,
+and the optimal density estimate itself are plotted as below.
 
 ``` r
-plot_opt_den <- plot_density(
+plot_ld2 <- plot_logden_deriv2(
+  scorematching_logconcave = opt_den,
+  plot_domain = domain
+  )
+
+plot_ld1 <- plot_logden_deriv1(
+  scorematching_logconcave = opt_den,
+  plot_domain = domain
+  )
+
+plot_ld <- plot_logdensity(
+  scorematching_logconcave = opt_den,
+  plot_domain = domain
+  )
+
+plot_den <- plot_density(
   scorematching_logconcave = opt_den,
   plot_domain = domain,
   plot_points_cnt = 500, 
   plot_hist = TRUE
   )
-plot_opt_den
+
+plot_ld2 + plot_ld1 + plot_ld + plot_den
 ```
 
 ![](README-plot-opt-1.png)<!-- -->
+
+We can also use the function \`\` to view the log-concave maximum
+likelihood and score matching density estimates together with the
+histogram.
+
+``` r
+plot_mle_scorematching(
+  scorematching_logconcave = opt_den, 
+  plot_domain = domain, 
+  plot_points_cnt = 500, 
+  plot_hist = TRUE) 
+```
+
+![](README-mle-sm-1.png)<!-- -->
 
 We could assess the quality of this density estimate using various
 metrics between two probability distributions, for example, the
