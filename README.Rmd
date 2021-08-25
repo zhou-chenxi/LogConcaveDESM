@@ -170,16 +170,45 @@ opt_den <- cv_optimal_density_estimate(
 )
 ```
 
-The resulting density estimate is the following. 
+The second and first derivatives of the logarithm of the optimal density estimate, the logarithm of 
+the un-normalized optimal density estimate, and the optimal density estimate itself are plotted 
+as below. 
 
 ```{r plot-opt}
-plot_opt_den <- plot_density(
+plot_ld2 <- plot_logden_deriv2(
+  scorematching_logconcave = opt_den,
+  plot_domain = domain
+  )
+
+plot_ld1 <- plot_logden_deriv1(
+  scorematching_logconcave = opt_den,
+  plot_domain = domain
+  )
+
+plot_ld <- plot_logdensity(
+  scorematching_logconcave = opt_den,
+  plot_domain = domain
+  )
+
+plot_den <- plot_density(
   scorematching_logconcave = opt_den,
   plot_domain = domain,
   plot_points_cnt = 500, 
   plot_hist = TRUE
   )
-plot_opt_den
+
+plot_ld2 + plot_ld1 + plot_ld + plot_den
+```
+
+We can also use the function `` to view the log-concave maximum likelihood and score matching 
+density estimates together with the histogram. 
+
+```{r mle-sm}
+plot_mle_scorematching(
+  scorematching_logconcave = opt_den, 
+  plot_domain = domain, 
+  plot_points_cnt = 500, 
+  plot_hist = TRUE) 
 ```
 
 We could assess the quality of this density estimate using various metrics 
