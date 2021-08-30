@@ -113,6 +113,8 @@ plot_logden_deriv2 <- function(scorematching_logconcave, plot_domain, plot_point
             title = 'Second Derivative of Log-density Estimate') +
         ggplot2::theme_bw()
 
+    plot <- plot + ggplot2::coord_cartesian(xlim = plot_domain)
+
     return(plot)
 
 }
