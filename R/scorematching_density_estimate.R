@@ -139,6 +139,8 @@ plot_density <- function(scorematching_logconcave, minus_const = 0, plot_domain,
 
     }
 
+    plot <- plot + ggplot2::coord_cartesian(xlim = plot_domain)
+
     return(plot)
 
 }
