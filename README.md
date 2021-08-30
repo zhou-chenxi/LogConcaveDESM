@@ -17,7 +17,7 @@ the GitHub using `devtools`:
 
 ``` r
 # install.packages("devtools")
-# devtools::install_github("zhoucx1119/LogConcaveDESM")
+devtools::install_github("zhoucx1119/LogConcaveDESM")
 ```
 
 ## Load the Package
