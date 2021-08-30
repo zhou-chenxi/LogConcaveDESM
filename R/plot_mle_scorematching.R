@@ -149,6 +149,9 @@ plot_mle_scorematching <- function(scorematching_logconcave, plot_domain, smooth
 
     }
 
+    density_plot_combined <- density_plot_combined +
+        ggplot2::coord_cartesian(xlim = plot_domain)
+
     return(density_plot_combined)
 
 }
