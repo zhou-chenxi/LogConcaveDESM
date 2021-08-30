@@ -92,19 +92,19 @@ result <- lcd_scorematching(
 #>           warm start: on, polish: on, time_limit: off
 #> 
 #> iter   objective    pri res    dua res    rho        time
-#>    1  -4.3429e+00   1.35e+01   4.63e-03   1.00e-01   4.58e-03s
-#>  200  -6.7500e+01   2.79e+00   1.88e-03   1.98e-02   1.74e-02s
-#>  400  -7.1064e+01   4.32e+00   4.59e-04   3.81e-03   2.96e-02s
-#>  600  -6.5517e+01   1.60e+00   1.22e-04   3.81e-03   4.04e-02s
-#>  800  -6.7135e+01   4.42e-01   3.10e-05   3.81e-03   5.18e-02s
-#> 1000  -6.6824e+01   1.01e-01   6.51e-06   3.81e-03   6.42e-02s
-#> plsh  -6.6874e+01   4.27e-10   3.14e-09   --------   6.69e-02s
+#>    1  -4.3429e+00   1.35e+01   4.63e-03   1.00e-01   4.47e-03s
+#>  200  -6.7500e+01   2.79e+00   1.88e-03   1.98e-02   1.68e-02s
+#>  400  -7.1064e+01   4.32e+00   4.59e-04   3.81e-03   2.89e-02s
+#>  600  -6.5517e+01   1.60e+00   1.22e-04   3.81e-03   3.99e-02s
+#>  800  -6.7135e+01   4.42e-01   3.10e-05   3.81e-03   5.27e-02s
+#> 1000  -6.6824e+01   1.01e-01   6.51e-06   3.81e-03   6.35e-02s
+#> plsh  -6.6874e+01   4.27e-10   3.14e-09   --------   6.61e-02s
 #> 
 #> status:               solved
 #> solution polish:      successful
 #> number of iterations: 1000
 #> optimal objective:    -66.8737
-#> run time:             6.69e-02s
+#> run time:             6.61e-02s
 #> optimal rho estimate: 1.93e-03
 #> The status of solving the constrained quadratic optimization problem is: optimal.
 ```
