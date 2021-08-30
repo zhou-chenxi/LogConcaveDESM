@@ -157,8 +157,6 @@ plot_logdensity <- function(scorematching_logconcave, plot_domain, plot_points_c
             title = 'Log-density Estimate') +
         ggplot2::theme_bw()
 
-    plot <- plot + ggplot2::coord_cartesian(xlim = plot_domain)
-
     return(plot)
 
 }
