@@ -2,7 +2,7 @@
 % Please edit documentation in R/ani_density_penalty.R
 \name{ani_density_penalty}
 \alias{ani_density_penalty}
-\title{Building a gif to view the effects of the penalty parameter on the density estimate}
+\title{Building an animation to view the effects of the penalty parameter on density estimates}
 \usage{
 ani_density_penalty(
   data,
@@ -18,10 +18,9 @@ missing values are automatically removed.}
 
 \item{domain}{A numeric vector of length 2 specifying the left and right
 endpoints of the bounded domain;
-its components cannot be \code{NA}, \code{NULL}, \code{-Inf}, or \code{Inf}.}
+its components cannot be \code{NA}, \code{NULL}, or \code{NaN}.}
 
-\item{penalty_params_seq}{Penalty parameter for computing the density estimate; must be non-negative.
-Default is \code{1e-1}.}
+\item{penalty_params_seq}{Penalty parameter for computing the density estimate; must be non-negative.}
 
 \item{plot_domain}{A numeric vector to indicate the domain of the plot.}
 
@@ -29,16 +28,13 @@ Default is \code{1e-1}.}
 Default is \code{100}.}
 }
 \value{
-A list of plots with multiple layers for creating the gif.
-To view the resulting gif, please use
+A list of plots with multiple layers for creating the animation.
+To view the resulting animation, please use
 \code{gganimate::animate(anim, renderer = gganimate::gifski_renderer())}.
 }
 \description{
-Creates a gif to visualize how different penalty parameters can affect the density estimates.
-The resulting gif shows the density estimates with increasing values of the penalty parameters.
-For the small penalty parameter, the resulting density estimate should be concentrating at
-the place where the data are abundant. As the penalty parameter increases, the resulting density
-estimate is getting closer to the density function of the uniform distribution over the domain.
+Creates an animation to visualize how different penalty parameters can affect the density estimates.
+The resulting animation shows the density estimates with increasing values of the penalty parameters.
 }
 \examples{
 library(transformr)
