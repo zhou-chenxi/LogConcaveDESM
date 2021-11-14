@@ -20,16 +20,16 @@ the (penalized) log-concave score matching density estimate based on i.i.d sampl
 The output is an object of class "\code{LogConcaveDESM}" which is used as an input to
 various auxiliary functions.
 
-\code{\link{evaluate_logden_deriv2}} evaluates and \code{\link{plot_logden_deriv2}}
-plots the second derivative of the logarithm of the log-concave score matching
+\code{\link{evaluate_logdensity_deriv2}} and \code{\link{plot_logdensity_deriv2}}
+evaluates and plots the second derivative of the logarithm of the log-concave score matching
 density estimate, respectively.
 
-\code{\link{evaluate_logden_deriv1}} evaluates and \code{\link{plot_logden_deriv1}}
+\code{\link{evaluate_logdensity_deriv1}} evaluates and \code{\link{plot_logdensity_deriv1}}
 plots the first derivative of the logarithm of the log-concave score matching
 density estimate, respectively.
 
 \code{\link{evaluate_logdensity}} evaluates and \code{\link{plot_logdensity}} plots
-the logarithm of the un-normalized log-concave score matching density estimate, respectively.
+the logarithm of the log-concave score matching density estimate up to a normalizing constant, respectively.
 
 \code{\link{evaluate_density}} evaluates and \code{\link{plot_density}} plots the log-concave
 score matching density estimate, respectively.
