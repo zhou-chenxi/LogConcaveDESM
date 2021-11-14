@@ -3,12 +3,12 @@
 
 # Log-Concave Density Estimation Using the Score Matching Loss Function
 
-`LogConcaveDESM` is an package to compute and visualize the log-concave
-score matching derocnsity estimate over a bounded domain. It also
-contains functions to plot the first and second derivatives of the
-log-density estimate. Furthermore, functions to compute various
-distances between two probability distributions are provided to assess
-the quality of the density estimate.
+`LogConcaveDESM` is an package to compute and visualize the (penalized)
+log-concave score matching density estimate. It also contains functions
+to plot the first and second derivatives of the log-density estimate.
+Furthermore, functions to compute various distances between two
+probability distributions are provided to assess the quality of the
+density estimate.
 
 ## Installation
 
@@ -17,7 +17,7 @@ the GitHub using `devtools`:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("zhoucx1119/LogConcaveDESM")
+# devtools::install_github("zhoucx1119/LogConcaveDESM")
 ```
 
 ## Load the Package
@@ -28,14 +28,14 @@ library(patchwork)
 library(ggplot2)
 ```
 
-## Computing and Visualizing Unpenalized Log-concave Score Matching Density Estimate
+## Computing and Visualizing Unpenalized Log-concave Score Matching Density Estimate over a Bounded Domain
 
 We show how to use functions in `LogConcaveDESM` to compute and
 visualize the log-concave score matching density estimate over a bounded
 domain.
 
 We first simulate data from a truncated normal distribution over the
-interval \[ − 5, 5\].
+interval \[−5,5\].
 
 ``` r
 set.seed(2021)
@@ -92,30 +92,30 @@ result <- lcd_scorematching(
 #>           warm start: on, polish: on, time_limit: off
 #> 
 #> iter   objective    pri res    dua res    rho        time
-#>    1  -4.3429e+00   1.35e+01   4.63e-03   1.00e-01   4.47e-03s
-#>  200  -6.7500e+01   2.79e+00   1.88e-03   1.98e-02   1.68e-02s
-#>  400  -7.1064e+01   4.32e+00   4.59e-04   3.81e-03   2.89e-02s
-#>  600  -6.5517e+01   1.60e+00   1.22e-04   3.81e-03   3.99e-02s
-#>  800  -6.7135e+01   4.42e-01   3.10e-05   3.81e-03   5.27e-02s
-#> 1000  -6.6824e+01   1.01e-01   6.51e-06   3.81e-03   6.35e-02s
-#> plsh  -6.6874e+01   4.27e-10   3.14e-09   --------   6.61e-02s
+#>    1  -4.3429e+00   1.35e+01   4.63e-03   1.00e-01   2.80e-03s
+#>  200  -6.7500e+01   2.79e+00   1.88e-03   1.98e-02   1.09e-02s
+#>  400  -7.1064e+01   4.32e+00   4.59e-04   3.81e-03   1.88e-02s
+#>  600  -6.5517e+01   1.60e+00   1.22e-04   3.81e-03   2.60e-02s
+#>  800  -6.7135e+01   4.42e-01   3.10e-05   3.81e-03   3.31e-02s
+#> 1000  -6.6824e+01   1.01e-01   6.51e-06   3.81e-03   3.98e-02s
+#> plsh  -6.6874e+01   4.27e-10   3.14e-09   --------   4.14e-02s
 #> 
 #> status:               solved
 #> solution polish:      successful
 #> number of iterations: 1000
 #> optimal objective:    -66.8737
-#> run time:             6.61e-02s
+#> run time:             4.14e-02s
 #> optimal rho estimate: 1.93e-03
 #> The status of solving the constrained quadratic optimization problem is: optimal.
 ```
 
 Then, the second derivative of the logarithm of the log-concave score
 matching density estimate at arbitrary points can be computed using the
-`evaluate_logden_deriv2` function, and can be visualized using the
-`plot_logden_deriv2` function.
+`evaluate_logdensity_deriv2` function, and can be visualized using the
+`plot_logdensity_deriv2` function.
 
 ``` r
-logden_deriv2_vals <- evaluate_logden_deriv2(
+logden_deriv2_vals <- evaluate_logdensity_deriv2(
   scorematching_logconcave = result, 
   newx = seq(domain[1], domain[2], length.out = 11)
 )
@@ -133,7 +133,7 @@ logden_deriv2_vals
 #> 10           4  -3.700341e-12
 #> 11           5   0.000000e+00
 
-plot_deriv2 <- plot_logden_deriv2(
+plot_deriv2 <- plot_logdensity_deriv2(
   scorematching_logconcave = result, 
   plot_domain = domain, 
   plot_points_cnt = 500)
@@ -144,11 +144,11 @@ plot_deriv2
 
 Subsequently, the first derivative of the logarithm of the log-concave
 score matching density estimate at arbitrary points can be computed
-using the `evaluate_logden_deriv1` function, and can be visualized using
-the `plot_logden_deriv1` function.
+using the `evaluate_logdensity_deriv1` function, and can be visualized
+using the `plot_logdensity_deriv1` function.
 
 ``` r
-logden_deriv1_vals <- evaluate_logden_deriv1(
+logden_deriv1_vals <- evaluate_logdensity_deriv1(
   scorematching_logconcave = result, 
   newx = seq(domain[1], domain[2], length.out = 11)
 )
@@ -166,7 +166,7 @@ logden_deriv1_vals
 #> 10           4     -33.035110
 #> 11           5     -33.035110
 
-plot_deriv1 <- plot_logden_deriv1(
+plot_deriv1 <- plot_logdensity_deriv1(
   scorematching_logconcave = result, 
   plot_domain = domain, 
   plot_points_cnt = 500)
@@ -215,6 +215,7 @@ den_vals <- evaluate_density(
   scorematching_logconcave = result, 
   newx = seq(domain[1], domain[2], length.out = 11)
 )
+#> [1] 1.748594e+252
 den_vals
 #>    newx_sorted  density_vals
 #> 1           -5 5.718881e-253
@@ -235,17 +236,18 @@ plot_den <- plot_density(
   plot_points_cnt = 500, 
   plot_hist = TRUE
   )
+#> [1] 1.748594e+252
 plot_den
 ```
 
 ![](README-den-1.png)<!-- -->
 
-## Computing and Visualizing Penalized Log-concave Score Matching Density Estimate
+## Computing and Visualizing Penalized Log-concave Score Matching Density Estimate over a Bounded Domain
 
 As we can see above, the un-penalized log-concave score matching density
 estimate is too concentrated at the place where data are abundant. To
 remedy this, we consider penalized log-concave score matching density
-estimate, where the optimal penalty parameter is chosen using the
+estimate, where the optimal penalty parameter can be chosen using the
 `cv_optimal_density_estimate` function.
 
 ``` r
@@ -334,21 +336,8 @@ opt_den <- cv_optimal_density_estimate(
 #> The status of solving the constrained quadratic optimization problem is: optimal. 
 #> The status of solving the constrained quadratic optimization problem is: optimal. 
 #> The status of solving the constrained quadratic optimization problem is: optimal.
-#>    penalty_param  loss_vals
-#> 1    0.006737947 10.4393950
-#> 2    0.011108997  6.5639880
-#> 3    0.018315639  3.6106832
-#> 4    0.030197383  1.3993944
-#> 5    0.049787068  0.1192177
-#> 6    0.082084999 -0.6599348
-#> 7    0.135335283 -0.9945474
-#> 8    0.223130160 -1.0987366
-#> 9    0.367879441 -1.0469678
-#> 10   0.606530660 -0.9045135
-#> 11   1.000000000 -0.7083408
-#> 12   1.648721271 -0.5121017
-#> 13   2.718281828 -0.3486011
-#> [1] "Optimal penality parameter is 0.22313016014843."
+#> c(0.00673794699908547, 0.0111089965382423, 0.0183156388887342, 0.0301973834223185, 0.0497870683678639, 0.0820849986238988, 0.135335283236613, 0.22313016014843, 0.367879441171442, 0.606530659712633, 1, 1.64872127070013, 2.71828182845905)c(10.4393949720615, 6.56398796412593, 3.61068316988729, 1.39939440602571, 0.119217692029153, -0.659934761658924, -0.99454741136814, -1.09873663169563, -1.04696779545914, -0.904513505116862, -0.708340762882839, -0.512101693621595, -0.348601108001249)
+#> Optimal penality parameter is 0.22313016014843.
 #> The status of solving the constrained quadratic optimization problem is: optimal.
 ```
 
@@ -357,12 +346,12 @@ estimate, the logarithm of the un-normalized optimal density estimate,
 and the optimal density estimate itself are plotted as below.
 
 ``` r
-plot_ld2 <- plot_logden_deriv2(
+plot_ld2 <- plot_logdensity_deriv2(
   scorematching_logconcave = opt_den,
   plot_domain = domain
   )
 
-plot_ld1 <- plot_logden_deriv1(
+plot_ld1 <- plot_logdensity_deriv1(
   scorematching_logconcave = opt_den,
   plot_domain = domain
   )
@@ -378,6 +367,7 @@ plot_den <- plot_density(
   plot_points_cnt = 500, 
   plot_hist = TRUE
   )
+#> [1] 271.2789
 
 plot_ld2 + plot_ld1 + plot_ld + plot_den
 ```
@@ -394,6 +384,7 @@ plot_mle_scorematching(
   plot_domain = domain, 
   plot_points_cnt = 500, 
   plot_hist = TRUE) 
+#> [1] 271.2789
 ```
 
 ![](README-mle-sm-1.png)<!-- -->
@@ -407,6 +398,26 @@ distance, and the Hellinger distance.
 kl <- kl_div(
   true_density = t_normal, 
   density_estimate = opt_den) 
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
 
 hyva <- hyvarinen_div(
   true_density = t_normal, 
@@ -415,10 +426,18 @@ hyva <- hyvarinen_div(
 l1 <- L1_dist(
   true_density = t_normal, 
   density_estimate = opt_den) 
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
 
 he <- hellinger_dist(
   true_density = t_normal, 
   density_estimate = opt_den) 
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
+#> [1] 271.2789
 
 metric_table <- cbind(
   Metrics = c("Kullback-Leibler Divergence", "Hyvarinen divergence", 
@@ -431,7 +450,16 @@ knitr::kable(metric_table)
 
 | Metrics                     | Values  |
 |:----------------------------|:--------|
-| Kullback-Leibler Divergence | 0.10629 |
-| Hyvarinen divergence        | 0.10367 |
-| L1 Distance                 | 0.30989 |
-| Hellinger Distance          | 0.1748  |
+| Kullback-Leibler Divergence | 0.09961 |
+| Hyvarinen divergence        | 0.10237 |
+| L1 Distance                 | 0.29509 |
+| Hellinger Distance          | 0.1774  |
+
+## Computing and Visualizing Penalized Log-concave Score Matching Density Estimate over Other Types of Domain
+
+Besides the bounded domain demonstrated above, `LogConcaveDESM` can also
+compute and visualize log-concave score matching density estimate over
+other types of domain, including the entire real line, an interval of
+the form (−∞,*b*) for some *b* \< ∞, and an interval of the form (*a*,∞)
+for some *a* \>  − ∞. Functions used are the same as those used in the
+bounded interval case. Demonstrations are omitted.
