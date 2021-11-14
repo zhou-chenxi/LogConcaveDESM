@@ -1,6 +1,6 @@
 #' Evaluation of the Score Matching Loss Function
 #'
-#' Evaluates the score matching loss function.
+#' Evaluates the score matching loss function at \code{new_data}.
 #'
 #' @param scorematching_logconcave An object of class "LogConcaveDESM",
 #' usually the output of \code{\link{lcd_scorematching}} or \code{\link{cv_optimal_density_estimate}}.
@@ -25,8 +25,8 @@
 evaluate_scorematching_loss <- function(scorematching_logconcave, new_data) {
 
     # Evaluate the score matching loss function
-    deriv2 <- evaluate_logden_deriv2(scorematching_logconcave, newx = new_data)$logderiv2_vals
-    deriv1 <- evaluate_logden_deriv1(scorematching_logconcave, newx = new_data)$logderiv1_vals
+    deriv2 <- evaluate_logdensity_deriv2(scorematching_logconcave, newx = new_data)$logderiv2_vals
+    deriv1 <- evaluate_logdensity_deriv1(scorematching_logconcave, newx = new_data)$logderiv1_vals
     result <- mean(deriv1 ** 2 / 2 + deriv2)
 
     return(result)
