@@ -1,14 +1,12 @@
 #' Cross Validation to Choose the Best Penalty Parameter
 #'
 #' Given a numeric vector of penalty parameter candidates, use the cross validation to
-#' choose the best one so that the resulting density estimate not only fits the training data well
-#' but can also generalize to unseen data.
+#' choose the best one.
 #'
 #' @param data A numeric vector whose log-concave density function is to be estimated;
 #' missing values are automatically removed.
 #' @param domain A numeric vector of length 2 specifying the left and right
-#' endpoints of the bounded domain;
-#' its components cannot be \code{NA}, \code{NULL}, \code{-Inf}, or \code{Inf}.
+#' endpoints of the bounded domain; its components cannot be \code{NaN}.
 #' @param penalty_param_candidates A numeric vector of the penalty parameter candidates;
 #' each element must be non-negative.
 #' @param fold_number An integer to indicate the number of folds for cross validation.
@@ -36,14 +34,8 @@ cv_optimal_density_estimate <- function(data, domain, penalty_param_candidates, 
     }
 
     stopifnot(length(domain) == 2)
-    if ((Inf %in% domain) || (-Inf %in% domain)) {
-        stop("domain cannot contain '-Inf' or 'Inf'.")
-    }
-    if (any(is.na(domain))) {
-        stop("domain cannot contain 'NA'.")
-    }
-    if (any(is.null(domain))) {
-        stop("domain cannot contain 'NULL'.")
+    if (any(is.nan(domain))) {
+        stop("domain cannot contain 'NaN'.")
     }
     domain <- sort(domain)
 
@@ -83,10 +75,10 @@ cv_optimal_density_estimate <- function(data, domain, penalty_param_candidates, 
         penalty_param = penalty_param_candidates,
         loss_vals = loss_record)
 
-    print(ddff)
+    message(ddff)
 
     opt_penalty_param <- penalty_param_candidates[which.min(loss_record)]
-    print(paste0("Optimal penality parameter is ", opt_penalty_param, "."))
+    message(paste0("Optimal penality parameter is ", opt_penalty_param, "."))
 
     opt_estimator <- lcd_scorematching(
         data = data,
