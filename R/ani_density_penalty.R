@@ -1,18 +1,14 @@
-#' Building a gif to view the effects of the penalty parameter on the density estimate
+#' Building an animation to view the effects of the penalty parameter on density estimates
 #'
-#' Creates a gif to visualize how different penalty parameters can affect the density estimates.
-#' The resulting gif shows the density estimates with increasing values of the penalty parameters.
-#' For the small penalty parameter, the resulting density estimate should be concentrating at
-#' the place where the data are abundant. As the penalty parameter increases, the resulting density
-#' estimate is getting closer to the density function of the uniform distribution over the domain.
+#' Creates an animation to visualize how different penalty parameters can affect the density estimates.
+#' The resulting animation shows the density estimates with increasing values of the penalty parameters.
 #'
 #' @param data A numeric vector whose log-concave density function is to be estimated;
 #' missing values are automatically removed.
 #' @param domain A numeric vector of length 2 specifying the left and right
 #' endpoints of the bounded domain;
-#' its components cannot be \code{NA}, \code{NULL}, \code{-Inf}, or \code{Inf}.
+#' its components cannot be \code{NA}, \code{NULL}, or \code{NaN}.
 #' @param penalty_params_seq Penalty parameter for computing the density estimate; must be non-negative.
-#' Default is \code{1e-1}.
 #' @param plot_domain A numeric vector to indicate the domain of the plot.
 #' @param plot_points_cnt A numeric to indicate the number of points for evaluating and plotting.
 #' Default is \code{100}.
@@ -23,8 +19,8 @@
 #' @import forcats
 #' @import transformr
 #'
-#' @return A list of plots with multiple layers for creating the gif.
-#' To view the resulting gif, please use
+#' @return A list of plots with multiple layers for creating the animation.
+#' To view the resulting animation, please use
 #' \code{gganimate::animate(anim, renderer = gganimate::gifski_renderer())}.
 #'
 #' @export
@@ -46,7 +42,7 @@
 #'
 ani_density_penalty <- function(data, domain, penalty_params_seq, plot_domain, plot_points_cnt = 100) {
 
-    if(any(penalty_params_seq < 0)) {
+    if (any(penalty_params_seq < 0)) {
         stop("All values in penalty_params_seq must be non-negative.")
     }
 
@@ -139,8 +135,8 @@ ani_density_penalty <- function(data, domain, penalty_params_seq, plot_domain, p
             transition_length = 1,
             state_length = 2) +
         gganimate::ease_aes('cubic-in-out') +
-        ggplot2::ggtitle("Density Estimates with Increasing Penalty Parameters"
-                         ,subtitle = "Penalty Parameter = {closest_state}")
+        ggplot2::ggtitle("Density Estimates with Increasing Penalty Parameters",
+                         subtitle = "Penalty Parameter = {closest_state}")
 
     return(plot)
 
