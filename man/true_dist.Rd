@@ -22,8 +22,7 @@ beta_dist(shape1, shape2)
 \item{parent_sd}{A numeric of the standard deviation parameter in the parent normal distribution;
 must be strictly positive.}
 
-\item{domain}{A numeric vector of the domain over which the distribution is
-defined; must be bounded and must not contain \code{Inf} or \code{-Inf}.}
+\item{domain}{A numeric vector of the domain over which the distribution is defined.}
 
 \item{parent_shape}{A numeric of the shape parameter in the parent gamma distribution;
 must be strictly positive.}
@@ -71,7 +70,7 @@ library(ggplot2)
 parent_mean <- 4
 parent_sd <- 1
 domain <- c(2, 5)
-t_normal <- truncated_normal(parent_mean, parent_sd, c(2, 5))
+t_normal <- truncated_normal(parent_mean, parent_sd, domain)
 
 # ------------------------------------
 # sampling function
