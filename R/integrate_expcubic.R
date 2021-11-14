@@ -1,9 +1,9 @@
 #' Integration of an Exponential-Cubic Function
 #'
-#' Integrates a function of the form \eqn{\exp(a*x^3+b*x^2+c*x+d)} over a bounded interval.
+#' Integrates a function of the form \eqn{\exp(a*x^3+b*x^2+c*x+d)} over an interval.
 #'
 #' @param a,b,c,d The coefficients of \eqn{x^3}, \eqn{x^2}, \eqn{x}, and the constant term, respectively.
-#' @param lower,upper Numeric to specify the limits of integration; must be finite.
+#' @param lower,upper Numeric values to specify the limits of integration.
 #' @param minus_const A numeric to be subtracted in the exponent to
 #' ensure the finite-ness of the integration result. Default is \code{0}.
 #'
