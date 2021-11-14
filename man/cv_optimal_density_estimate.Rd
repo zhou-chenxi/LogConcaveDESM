@@ -16,8 +16,7 @@ cv_optimal_density_estimate(
 missing values are automatically removed.}
 
 \item{domain}{A numeric vector of length 2 specifying the left and right
-endpoints of the bounded domain;
-its components cannot be \code{NA}, \code{NULL}, \code{-Inf}, or \code{Inf}.}
+endpoints of the bounded domain; its components cannot be \code{NaN}.}
 
 \item{penalty_param_candidates}{A numeric vector of the penalty parameter candidates;
 each element must be non-negative.}
@@ -30,8 +29,7 @@ A object with class "LogConcaveDESM" with the penalty parameter being the optima
 }
 \description{
 Given a numeric vector of penalty parameter candidates, use the cross validation to
-choose the best one so that the resulting density estimate not only fits the training data well
-but can also generalize to unseen data.
+choose the best one.
 }
 \examples{
 set.seed(1119)
