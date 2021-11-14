@@ -12,7 +12,7 @@ kl_div(
   true_density,
   density_estimate,
   minus_const = 0,
-  mc_batch_size = 100,
+  mc_batch_size = 1000,
   mc_rel_tol_param = 0.01,
   print_error = FALSE
 )
@@ -20,7 +20,7 @@ kl_div(
 hyvarinen_div(
   true_density,
   density_estimate,
-  mc_batch_size = 100,
+  mc_batch_size = 1000,
   mc_rel_tol_param = 0.01,
   print_error = FALSE
 )
@@ -29,7 +29,7 @@ L1_dist(
   true_density,
   density_estimate,
   minus_const = 0,
-  mc_batch_size = 100,
+  mc_batch_size = 1000,
   mc_rel_tol_param = 0.01,
   print_error = FALSE
 )
@@ -38,7 +38,7 @@ hellinger_dist(
   true_density,
   density_estimate,
   minus_const = 0,
-  mc_batch_size = 100,
+  mc_batch_size = 1000,
   mc_rel_tol_param = 0.01,
   print_error = FALSE
 )
@@ -56,7 +56,7 @@ usually the output of \code{\link{lcd_scorematching}} or
 ensure the finite-ness of the integration result. Default is \code{0}.}
 
 \item{mc_batch_size}{A numeric to specify the batch size of each Monte Carlo draw of random samples.
-Default is \code{100}.}
+Default is \code{1000}.}
 
 \item{mc_rel_tol_param}{A numeric to specify the criterion of terminating the batch Monte Carlo algorithm.
 Default is \code{1e-2}.}
