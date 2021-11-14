@@ -9,7 +9,7 @@ integrate_expcubic(a, b, c, d, lower, upper, minus_const = 0)
 \arguments{
 \item{a, b, c, d}{The coefficients of \eqn{x^3}, \eqn{x^2}, \eqn{x}, and the constant term, respectively.}
 
-\item{lower, upper}{Numeric to specify the limits of integration; must be finite.}
+\item{lower, upper}{Numeric values to specify the limits of integration.}
 
 \item{minus_const}{A numeric to be subtracted in the exponent to
 ensure the finite-ness of the integration result. Default is \code{0}.}
@@ -18,7 +18,7 @@ ensure the finite-ness of the integration result. Default is \code{0}.}
 A numeric of the integral of \eqn{\exp(a*x^3+b*x^2+c*x+d)} from \code{lower} to \code{upper}.
 }
 \description{
-Integrates a function of the form \eqn{\exp(a*x^3+b*x^2+c*x+d)} over a bounded interval.
+Integrates a function of the form \eqn{\exp(a*x^3+b*x^2+c*x+d)} over an interval.
 }
 \examples{
 integrate_expcubic(a = 1, b = -2, c = 3, d = -2, lower = -2, upper = 2)
