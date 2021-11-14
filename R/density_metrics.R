@@ -12,7 +12,7 @@
 #' @param minus_const A numeric to be subtracted in the exponent to
 #' ensure the finite-ness of the integration result. Default is \code{0}.
 #' @param mc_batch_size A numeric to specify the batch size of each Monte Carlo draw of random samples.
-#' Default is \code{100}.
+#' Default is \code{1000}.
 #' @param mc_rel_tol_param A numeric to specify the criterion of terminating the batch Monte Carlo algorithm.
 #' Default is \code{1e-2}.
 #' @param print_error A logical value to specify whether to print the error after each Monte Carlo draw.
@@ -27,7 +27,7 @@ NULL
 #' @export
 #'
 kl_div <- function(true_density, density_estimate, minus_const = 0,
-                   mc_batch_size = 100, mc_rel_tol_param = 1e-2, print_error = FALSE) {
+                   mc_batch_size = 1000, mc_rel_tol_param = 1e-2, print_error = FALSE) {
 
     # check the domain
     true_domain <- true_density$domain
@@ -72,7 +72,7 @@ kl_div <- function(true_density, density_estimate, minus_const = 0,
 #' @export
 #'
 hyvarinen_div <- function(true_density, density_estimate,
-                          mc_batch_size = 100, mc_rel_tol_param = 1e-2, print_error = FALSE) {
+                          mc_batch_size = 1000, mc_rel_tol_param = 1e-2, print_error = FALSE) {
 
     # check the domain
     true_domain <- true_density$domain
@@ -84,7 +84,7 @@ hyvarinen_div <- function(true_density, density_estimate,
     # ----------------------------------------------------------------------------------------------
     batch <- true_density$sampling(mc_batch_size)
     true_vals <- true_density$evaluate_logderiv1(batch)$logdervals
-    esti_vals <- evaluate_logden_deriv1(density_estimate, batch)$logderiv1_vals
+    esti_vals <- evaluate_logdensity_deriv1(density_estimate, batch)$logderiv1_vals
 
     result1 <- mean((true_vals - esti_vals) ** 2) / 2
     rel_error <- .Machine$double.xmax
@@ -95,7 +95,7 @@ hyvarinen_div <- function(true_density, density_estimate,
 
         new_batch <- true_density$sampling(mc_batch_size)
         true_vals <- true_density$evaluate_logderiv1(new_batch)$logdervals
-        esti_vals <- evaluate_logden_deriv1(density_estimate, new_batch)$logderiv1_vals
+        esti_vals <- evaluate_logdensity_deriv1(density_estimate, new_batch)$logderiv1_vals
 
         result1 <- mean((true_vals - esti_vals) ** 2) / 2
         result1 <- (result1 + result2) / 2
@@ -117,7 +117,7 @@ hyvarinen_div <- function(true_density, density_estimate,
 #' @export
 #'
 L1_dist <- function(true_density, density_estimate, minus_const = 0,
-                    mc_batch_size = 100, mc_rel_tol_param = 1e-2, print_error = FALSE) {
+                    mc_batch_size = 1000, mc_rel_tol_param = 1e-2, print_error = FALSE) {
 
     # check the domain
     true_domain <- true_density$domain
@@ -163,7 +163,7 @@ L1_dist <- function(true_density, density_estimate, minus_const = 0,
 #' @export
 #'
 hellinger_dist <- function(true_density, density_estimate, minus_const = 0,
-                           mc_batch_size = 100, mc_rel_tol_param = 1e-2, print_error = FALSE) {
+                           mc_batch_size = 1000, mc_rel_tol_param = 1e-2, print_error = FALSE) {
 
     # check the domain
     true_domain <- true_density$domain
