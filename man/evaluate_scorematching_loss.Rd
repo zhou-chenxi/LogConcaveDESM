@@ -17,7 +17,7 @@ should be evaluated.}
 A numeric of the score matching loss function evaluated at the new_data.
 }
 \description{
-Evaluates the score matching loss function.
+Evaluates the score matching loss function at \code{new_data}.
 }
 \examples{
 set.seed(1119)
