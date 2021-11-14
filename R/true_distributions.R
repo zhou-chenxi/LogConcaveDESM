@@ -34,8 +34,7 @@ NULL
 #' @param parent_mean A numeric of the mean parameter in the parent normal distribution.
 #' @param parent_sd A numeric of the standard deviation parameter in the parent normal distribution;
 #' must be strictly positive.
-#' @param domain A numeric vector of the domain over which the distribution is
-#' defined; must be bounded and must not contain \code{Inf} or \code{-Inf}.
+#' @param domain A numeric vector of the domain over which the distribution is defined.
 #'
 #' @examples
 #' library(ggplot2)
@@ -44,7 +43,7 @@ NULL
 #' parent_mean <- 4
 #' parent_sd <- 1
 #' domain <- c(2, 5)
-#' t_normal <- truncated_normal(parent_mean, parent_sd, c(2, 5))
+#' t_normal <- truncated_normal(parent_mean, parent_sd, domain)
 #'
 #' # ------------------------------------
 #' # sampling function
@@ -75,10 +74,6 @@ NULL
 truncated_normal <- function(parent_mean, parent_sd, domain) {
 
     # checking
-    if ((Inf %in% domain) || (-Inf %in% domain)) {
-        stop("The domain must be bounded.")
-    }
-
     if (length(domain) != 2) {
         stop("The length of the domain should be 2.")
     }
@@ -213,10 +208,6 @@ truncated_normal <- function(parent_mean, parent_sd, domain) {
 truncated_gamma <- function(parent_shape, parent_rate, domain) {
 
     # checking
-    if ((Inf %in% domain) || (-Inf %in% domain)) {
-        stop("The domain must be bounded.")
-    }
-
     if (length(domain) != 2) {
         stop("The length of the domain should be 2.")
     }
