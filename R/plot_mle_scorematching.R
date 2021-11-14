@@ -1,6 +1,6 @@
 #' Plotting the Log-concave Maximum Likelihood and Score Matching Density Estimates
 #'
-#' Plots the log-concave maximum likelihood and score matching density estimates together.
+#' Plots the log-concave maximum likelihood and (penalized) score matching density estimates together.
 #'
 #' @param scorematching_logconcave An object of class "LogConcaveDESM",
 #' usually the output of \code{\link{lcd_scorematching}} or \code{\link{cv_optimal_density_estimate}}.
@@ -28,8 +28,8 @@
 #'
 #' @seealso \href{https://cran.r-project.org/web/packages/logcondens/index.html}{logcondens}
 #'
-#' @return A ggplot2 plot of the log-concave maximum likelihood and score matching
-#' density estimates over the specified plot domain.
+#' @return A ggplot2 plot of the log-concave maximum likelihood and (penalized) score matching
+#' density estimates over the specified \code{plot_domain}.
 #' @export
 #'
 #' @examples
