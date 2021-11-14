@@ -1,11 +1,11 @@
 #' Computation and Plotting the Log-concave Score Matching Density Estimate
 #'
-#' Based on a "LogConcaveDESM" object, evaluates and plots the log-concave score matching
+#' Based on a "LogConcaveDESM" object, evaluates and plots the (penalized) log-concave score matching
 #' density estimate.
 #'
 #' @param scorematching_logconcave An object of class "LogConcaveDESM",
 #' usually the output of \code{\link{lcd_scorematching}} or \code{\link{cv_optimal_density_estimate}}.
-#' @param newx A numeric vector of real numbers at which the log-concave score matching
+#' @param newx A numeric vector of real numbers at which the (penalized) log-concave score matching
 #' density estimate should be evaluated.
 #' @param minus_const A numeric to be subtracted in the exponent to
 #' ensure the finite-ness of the integration result. Default is \code{0}.
@@ -13,11 +13,9 @@
 #' @import ggplot2
 #' @import stats
 #'
-#' @return A data frame with the first column being the sorted newx and
+#' @return A data frame with the first column being the sorted \code{newx} and
 #' the second column being the corresponding values of
-#' the log-concave score matching density estimate.
-#'
-#' @export
+#' the (penalized) log-concave score matching density estimate.
 #'
 #' @examples
 #' set.seed(1119)
@@ -36,43 +34,40 @@
 #' plot_hist = TRUE)
 #'
 #'
+#' @name sm_density
+NULL
+
+#' @rdname sm_density
+#' @export
 evaluate_density <- function(scorematching_logconcave, newx, minus_const = 0) {
 
+    # preprocess data
+    newx <- as.numeric(newx)
+    newx <- newx[!is.nan(newx)]
     newx <- sort(newx)
 
-    domain <- scorematching_logconcave$domain
-
-    valid_newx <- newx[newx >= domain[1] & newx <= domain[2]]
-    invalid_newx <- newx[newx < domain[1] | newx > domain[2]]
-
-    # compute density estimates for invalid_newx
-    invalid_newx_den <- data.frame(
-        newx_sorted = invalid_newx,
-        density_vals = rep(0, length(invalid_newx))
-    )
-
-    # compute density estimates for valid_newx
-    log_den_vals <- evaluate_logdensity(
+    # compute the values of un-normalized density estimate
+    logden <- evaluate_logdensity(
         scorematching_logconcave = scorematching_logconcave,
-        newx = valid_newx)
+        newx = newx)
+    den_vals <- exp(logden$logdensity_vals - minus_const)
 
-    den_vals <- exp(log_den_vals$logdensity_vals - minus_const)
+    # compute normalizing constant
+    norm_const <- normalizing_const(
+        scorematching_logconcave = scorematching_logconcave,
+        minus_const = minus_const)
+    print(norm_const)
 
-    norm_const <- normalizing_const(scorematching_logconcave, minus_const)
-
-    valid_newx_den <- data.frame(
-        newx_sorted = log_den_vals$newx_sorted,
+    result <- data.frame(
+        newx_sorted = logden$newx_sorted,
         density_vals = den_vals / norm_const
     )
-
-    result <- rbind(invalid_newx_den, valid_newx_den)
-    result <- result[order(result$newx_sorted), ]
-
+    result <- dplyr::arrange(result, newx_sorted)
     return(result)
 
 }
 
-#' @rdname evaluate_density
+#' @rdname sm_density
 #' @param plot_domain A numeric vector to indicate the domain of the plot.
 #' @param plot_points_cnt A numeric to indicate the number of points for evaluating and plotting.
 #' Default is \code{100}.
@@ -84,7 +79,7 @@ evaluate_density <- function(scorematching_logconcave, newx, minus_const = 0) {
 #' must range from 0 to 1, inclusively; only works when \code{plot_hist == TRUE}.
 #' Default is \code{0.2}.
 #'
-#' @return A ggplot2 plot of the log-concave score matching density estimate
+#' @return A ggplot2 plot of the (penalized) log-concave score matching density estimate
 #' over the specified plot domain.
 #' @export
 #'
@@ -102,7 +97,7 @@ plot_density <- function(scorematching_logconcave, minus_const = 0, plot_domain,
         scorematching_logconcave = scorematching_logconcave,
         newx = seq(plot_domain[1], plot_domain[2], length.out = plot_points_cnt),
         minus_const = minus_const
-    )
+        )
 
     plot <- ggplot2::ggplot() +
         ggplot2::geom_line(
