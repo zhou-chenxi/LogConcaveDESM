@@ -45,11 +45,11 @@ must range from 0 to 1, inclusively; only works when \code{plot_hist == TRUE}.
 Default is \code{0.2}.}
 }
 \value{
-A ggplot2 plot of the log-concave maximum likelihood and score matching
-density estimates over the specified plot domain.
+A ggplot2 plot of the log-concave maximum likelihood and (penalized) score matching
+density estimates over the specified \code{plot_domain}.
 }
 \description{
-Plots the log-concave maximum likelihood and score matching density estimates together.
+Plots the log-concave maximum likelihood and (penalized) score matching density estimates together.
 }
 \examples{
 set.seed(1119)
