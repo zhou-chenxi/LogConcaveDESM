@@ -2,9 +2,21 @@
 % Please edit documentation in R/normalizing_const.R
 \name{normalizing_const}
 \alias{normalizing_const}
-\title{Computation the Normalizing Constant of a Log-concave Score Matching Density Estimate}
+\alias{normalizing_const_bounded}
+\alias{normalizing_const_R}
+\alias{normalizing_const_ninfb}
+\alias{normalizing_const_ainf}
+\title{Computation the Normalizing Constant}
 \usage{
 normalizing_const(scorematching_logconcave, minus_const = 0)
+
+normalizing_const_bounded(scorematching_logconcave, minus_const = 0)
+
+normalizing_const_R(scorematching_logconcave, minus_const = 0)
+
+normalizing_const_ninfb(scorematching_logconcave, minus_const = 0)
+
+normalizing_const_ainf(scorematching_logconcave, minus_const = 0)
 }
 \arguments{
 \item{scorematching_logconcave}{An object of class "LogConcaveDESM",
@@ -14,10 +26,18 @@ usually the output of \code{\link{lcd_scorematching}} or \code{\link{cv_optimal_
 ensure the finite-ness of the integration result. Default is \code{0}.}
 }
 \value{
-The normalizing constant of a log-concave score matching density estimate.
+The normalizing constant of a (penalized) un-normalized log-concave score matching density estimate.
 }
 \description{
-Computes the normalizing constant of a log-concave score matching density estimate.
+Computes the normalizing constant of a (penalized) un-normalized log-concave score matching density estimate.
+}
+\details{
+The functions \code{normalizing_const_bounded}, \code{normalizing_const_R}, \code{normalizing_const_ninfb},
+and \code{normalizing_const_ainf} computes the normalizing constant of a (penalized) un-normalized
+log-concave score matching density estimate when the underlying \code{domain} is a bounded interval,
+the entire real line, an interval of the form \eqn{(-\infty, b)}
+for some \eqn{b < \infty}, and an interval of the form \eqn{(a, \infty)} for some \eqn{a > -\infty}, respectively.
+The function \code{normalizing_const} encompasses all four cases.
 }
 \examples{
 set.seed(1119)
