@@ -75,7 +75,7 @@ cv_optimal_density_estimate <- function(data, domain, penalty_param_candidates, 
         penalty_param = penalty_param_candidates,
         loss_vals = loss_record)
 
-    message(ddff)
+    # message(ddff)
 
     opt_penalty_param <- penalty_param_candidates[which.min(loss_record)]
     message(paste0("Optimal penality parameter is ", opt_penalty_param, "."))
