@@ -92,19 +92,19 @@ result <- lcd_scorematching(
 #>           warm start: on, polish: on, time_limit: off
 #> 
 #> iter   objective    pri res    dua res    rho        time
-#>    1  -4.3429e+00   1.35e+01   4.63e-03   1.00e-01   2.80e-03s
-#>  200  -6.7500e+01   2.79e+00   1.88e-03   1.98e-02   1.09e-02s
-#>  400  -7.1064e+01   4.32e+00   4.59e-04   3.81e-03   1.88e-02s
-#>  600  -6.5517e+01   1.60e+00   1.22e-04   3.81e-03   2.60e-02s
-#>  800  -6.7135e+01   4.42e-01   3.10e-05   3.81e-03   3.31e-02s
-#> 1000  -6.6824e+01   1.01e-01   6.51e-06   3.81e-03   3.98e-02s
-#> plsh  -6.6874e+01   4.27e-10   3.14e-09   --------   4.14e-02s
+#>    1  -4.3429e+00   1.35e+01   4.63e-03   1.00e-01   2.52e-03s
+#>  200  -6.7500e+01   2.79e+00   1.88e-03   1.98e-02   1.07e-02s
+#>  400  -7.1064e+01   4.32e+00   4.59e-04   3.81e-03   1.87e-02s
+#>  600  -6.5517e+01   1.60e+00   1.22e-04   3.81e-03   2.59e-02s
+#>  800  -6.7135e+01   4.42e-01   3.10e-05   3.81e-03   3.30e-02s
+#> 1000  -6.6824e+01   1.01e-01   6.51e-06   3.81e-03   4.00e-02s
+#> plsh  -6.6874e+01   4.27e-10   3.14e-09   --------   4.15e-02s
 #> 
 #> status:               solved
 #> solution polish:      successful
 #> number of iterations: 1000
 #> optimal objective:    -66.8737
-#> run time:             4.14e-02s
+#> run time:             4.15e-02s
 #> optimal rho estimate: 1.93e-03
 #> The status of solving the constrained quadratic optimization problem is: optimal.
 ```
@@ -215,7 +215,6 @@ den_vals <- evaluate_density(
   scorematching_logconcave = result, 
   newx = seq(domain[1], domain[2], length.out = 11)
 )
-#> [1] 1.748594e+252
 den_vals
 #>    newx_sorted  density_vals
 #> 1           -5 5.718881e-253
@@ -236,7 +235,6 @@ plot_den <- plot_density(
   plot_points_cnt = 500, 
   plot_hist = TRUE
   )
-#> [1] 1.748594e+252
 plot_den
 ```
 
@@ -367,7 +365,6 @@ plot_den <- plot_density(
   plot_points_cnt = 500, 
   plot_hist = TRUE
   )
-#> [1] 271.2789
 
 plot_ld2 + plot_ld1 + plot_ld + plot_den
 ```
@@ -384,7 +381,6 @@ plot_mle_scorematching(
   plot_domain = domain, 
   plot_points_cnt = 500, 
   plot_hist = TRUE) 
-#> [1] 271.2789
 ```
 
 ![](README-mle-sm-1.png)<!-- -->
@@ -398,26 +394,6 @@ distance, and the Hellinger distance.
 kl <- kl_div(
   true_density = t_normal, 
   density_estimate = opt_den) 
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
 
 hyva <- hyvarinen_div(
   true_density = t_normal, 
@@ -426,18 +402,10 @@ hyva <- hyvarinen_div(
 l1 <- L1_dist(
   true_density = t_normal, 
   density_estimate = opt_den) 
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
 
 he <- hellinger_dist(
   true_density = t_normal, 
   density_estimate = opt_den) 
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
-#> [1] 271.2789
 
 metric_table <- cbind(
   Metrics = c("Kullback-Leibler Divergence", "Hyvarinen divergence", 
