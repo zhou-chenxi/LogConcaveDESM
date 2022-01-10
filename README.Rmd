@@ -25,7 +25,7 @@ The development version of the `LogConcaveDESM` can be installed from the GitHub
 
 ```{r installation}
 # install.packages("devtools")
-# devtools::install_github("zhoucx1119/LogConcaveDESM")
+devtools::install_github("zhoucx1119/LogConcaveDESM")
 ```
 
 ## Load the Package 
