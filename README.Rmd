@@ -199,7 +199,7 @@ plot_den <- plot_density(
 plot_ld2 + plot_ld1 + plot_ld + plot_den
 ```
 
-We can also use the function `` to view the log-concave maximum likelihood and score matching 
+We can also use the function `plot_mle_scorematching` to view the log-concave maximum likelihood and score matching 
 density estimates together with the histogram. 
 
 ```{r mle-sm}
