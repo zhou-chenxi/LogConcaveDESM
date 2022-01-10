@@ -56,7 +56,6 @@ evaluate_density <- function(scorematching_logconcave, newx, minus_const = 0) {
     norm_const <- normalizing_const(
         scorematching_logconcave = scorematching_logconcave,
         minus_const = minus_const)
-    print(norm_const)
 
     result <- data.frame(
         newx_sorted = logden$newx_sorted,
