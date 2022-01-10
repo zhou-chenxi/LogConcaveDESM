@@ -92,19 +92,19 @@ result <- lcd_scorematching(
 #>           warm start: on, polish: on, time_limit: off
 #> 
 #> iter   objective    pri res    dua res    rho        time
-#>    1  -4.3429e+00   1.35e+01   4.63e-03   1.00e-01   2.52e-03s
-#>  200  -6.7500e+01   2.79e+00   1.88e-03   1.98e-02   1.07e-02s
-#>  400  -7.1064e+01   4.32e+00   4.59e-04   3.81e-03   1.87e-02s
-#>  600  -6.5517e+01   1.60e+00   1.22e-04   3.81e-03   2.59e-02s
-#>  800  -6.7135e+01   4.42e-01   3.10e-05   3.81e-03   3.30e-02s
+#>    1  -4.3429e+00   1.35e+01   4.63e-03   1.00e-01   2.43e-03s
+#>  200  -6.7500e+01   2.79e+00   1.88e-03   1.98e-02   1.06e-02s
+#>  400  -7.1064e+01   4.32e+00   4.59e-04   3.81e-03   1.85e-02s
+#>  600  -6.5517e+01   1.60e+00   1.22e-04   3.81e-03   2.57e-02s
+#>  800  -6.7135e+01   4.42e-01   3.10e-05   3.81e-03   3.31e-02s
 #> 1000  -6.6824e+01   1.01e-01   6.51e-06   3.81e-03   4.00e-02s
-#> plsh  -6.6874e+01   4.27e-10   3.14e-09   --------   4.15e-02s
+#> plsh  -6.6874e+01   4.27e-10   3.14e-09   --------   4.16e-02s
 #> 
 #> status:               solved
 #> solution polish:      successful
 #> number of iterations: 1000
 #> optimal objective:    -66.8737
-#> run time:             4.15e-02s
+#> run time:             4.16e-02s
 #> optimal rho estimate: 1.93e-03
 #> The status of solving the constrained quadratic optimization problem is: optimal.
 ```
@@ -334,7 +334,6 @@ opt_den <- cv_optimal_density_estimate(
 #> The status of solving the constrained quadratic optimization problem is: optimal. 
 #> The status of solving the constrained quadratic optimization problem is: optimal. 
 #> The status of solving the constrained quadratic optimization problem is: optimal.
-#> c(0.00673794699908547, 0.0111089965382423, 0.0183156388887342, 0.0301973834223185, 0.0497870683678639, 0.0820849986238988, 0.135335283236613, 0.22313016014843, 0.367879441171442, 0.606530659712633, 1, 1.64872127070013, 2.71828182845905)c(10.4393949720615, 6.56398796412593, 3.61068316988729, 1.39939440602571, 0.119217692029153, -0.659934761658924, -0.99454741136814, -1.09873663169563, -1.04696779545914, -0.904513505116862, -0.708340762882839, -0.512101693621595, -0.348601108001249)
 #> Optimal penality parameter is 0.22313016014843.
 #> The status of solving the constrained quadratic optimization problem is: optimal.
 ```
@@ -371,9 +370,9 @@ plot_ld2 + plot_ld1 + plot_ld + plot_den
 
 ![](README-plot-opt-1.png)<!-- -->
 
-We can also use the function \`\` to view the log-concave maximum
-likelihood and score matching density estimates together with the
-histogram.
+We can also use the function `plot_mle_scorematching` to view the
+log-concave maximum likelihood and score matching density estimates
+together with the histogram.
 
 ``` r
 plot_mle_scorematching(
