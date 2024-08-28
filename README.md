@@ -3,7 +3,7 @@
 
 # Log-Concave Density Estimation Using the Score Matching Loss Function
 
-`LogConcaveDESM` is an package to compute and visualize the (penalized)
+`LogConcaveDESM` is a package to compute and visualize the (penalized)
 log-concave score matching density estimate. It also contains functions
 to plot the first and second derivatives of the log-density estimate.
 Furthermore, functions to compute various distances between two
